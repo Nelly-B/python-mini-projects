@@ -4,7 +4,7 @@ import ssl
 import smtplib
 
 email_sender = 'alapanelly@gmail.com'
-email_reciever = ''
+email_reciever = 'alapanellya@gmail.com'
 password = password
 
 subject = "God is all it takes"
@@ -16,6 +16,11 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 em = EmailMessage
 em['From'] = email_sender
 em['To'] = email_reciever
-em['subject'] = subject
+em['Subject'] = subject
 em.set_content(body)
 
+# create context
+context = ssl.create_default_context()
+with smtplib.SMTP_SSL('smtp.gmail.com', 587, context=context) as smtp:
+    smtp.login(email_sender, email_reciever)
+    smtp.sendmail(email_sender, email_reciever, em.as_string())
